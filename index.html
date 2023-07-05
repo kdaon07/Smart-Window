@@ -41,7 +41,7 @@
             <div class="box2"></div>
         </aside>
     </div>
-    <div class="allbox" style="float: left; top:33%; left: 12%;">
+    <div class="allbox" style="float: left; top:25%; left: 12%;">
         <span id="mp" style="font-family: 'Jua', sans-serif; font-size: 25px;"></span>
         <span id="hour" style="font-family: 'Jua', sans-serif; font-size: 25px;"></span>
         <div class="box3">
@@ -51,6 +51,11 @@
         <div style="font-family: 'Jua', sans-serif; font-size: 23px;">&nbsp;&nbsp;직접 선택해주세요👇</div>
         &nbsp;&nbsp;<input type="button" id="open" class="button" value="OPEN">
         &nbsp;&nbsp;<input type="button" id="close" class="button" value="CLOSE">
+        <br><br>
+        <div style="font-family: 'Jua', sans-serif; font-size: 23px;">&nbsp;&nbsp;스마트 윈도우에게&nbsp;&nbsp;나만의
+            기후를<br>&nbsp;&nbsp;맡겨주세요😚&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;설정해봐요🥰</div>
+        &nbsp;&nbsp;<input type="button" id="auto" class="button2" value="AUTO">
+        &nbsp;&nbsp;<input type="button" id="setting" class="button2" value="SETTING">
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-app.js"></script>
@@ -87,37 +92,33 @@
             document.querySelector("#dust").innerHTML =
                 "미세먼지 : " + object.dust + "㎍/m³";
         });
-        document.getElementById("open").onclick = function () {
-            database.ref("set").on("value", snapshot => {
+        database.ref("set").on("value", snapshot => {
             const object = snapshot.val();
             const auto = object.auto;
-            if (auto == 0) {
-                document.getElementById("open").onclick = function () {
-                    database.ref("set").update({ 'window': 1 });
+            document.getElementById('auto').onclick = function () {
+                if (auto == 1) {
+                    database.ref("set").update({ 'auto': 0 });
+                    alert("수동모드입니다.");
                 }
-                document.getElementById("close").onclick = function () {
-                    database.ref("set").update({ 'window': 0 });
+                else {
+                    database.ref("set").update({ 'auto': 1 });
+                    alert("자동모드입니다.");
                 }
-            }
-            else alert("자동모드입니다.");
-        });
-        }
-        document.getElementById("close").onclick = function () {
-            database.ref("set").on("value", snapshot => {
-            const object = snapshot.val();
-            const auto = object.auto;
-            if (auto == 0) {
-                document.getElementById("open").onclick = function () {
-                    database.ref("set").update({ 'window': 1 });
-                }
-                document.getElementById("close").onclick = function () {
-                    database.ref("set").update({ 'window': 0 });
-                }
-            }
-            else alert("자동모드입니다.");
-        });
-        }
 
+                document.getElementById("open").onclick = function () {
+                    if (auto == 1) {
+                        database.ref("set").update({ 'window': 1 });
+                    }
+                    else alert("자동모드입니다.");
+                };
+                document.getElementById("close").onclick = function () {
+                    if (auto == 1) {
+                        database.ref("set").update({ 'window': 0 });
+                    }
+                    else alert("자동모드입니다.");
+                }
+            };
+        });
     </script>
     <script>
         fun();

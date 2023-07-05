@@ -21,7 +21,7 @@ header {
 }
 aside {
     text-align: center;
-    float: right;
+    float: left;
     float: top;
     width: 50%;
     height: 100%;
@@ -38,14 +38,14 @@ select {
 .line {
     text-align: center;
     position: relative;
-    top: 50%;
+    top: 40%;
     transform: translateY(-50%);
 }
 .line2 {
     text-align: left;
     position: relative;
     left: 49%;
-    top: 40%;
+    top: 30%;
     transform: translateX(-30%);
 }
 .line3 {
@@ -112,6 +112,30 @@ header div {
 }
 
 .button:active {
+    background-color: #323233;
+    transition: background 0.4s ease-in-out;
+}
+
+.button2 {
+    font-size: 25px;
+    font-family: 'Jua';
+    color: white;
+    text-align: center;
+    width: 10%;
+    height: 20%;
+    background-color: #4949E8;
+    transition: background 0.2s ease-in-out;
+    border: 0px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.button2:hover {
+    background-color: #969696;
+    transition: background 0.2s ease-in-out;
+}
+
+.button2:active {
     background-color: #323233;
     transition: background 0.4s ease-in-out;
 }
