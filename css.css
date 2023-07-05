@@ -1,0 +1,94 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Jua', sans-serif;
+    overflow:hidden;
+    position: relative;
+}
+.allbox {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+header {
+    float: left;
+    width: 50%;
+    height: 33%;
+    text-align: center;
+    font-size: 50px;
+    font-family: 'Black Han Sans', sans-serif;
+}
+aside {
+    text-align: center;
+    float: right;
+    float: top;
+    width: 50%;
+    height: 100%;
+    font-family: 'Jua', sans-serif;
+    font-size: 20px;
+}
+select {
+    text-align: center;
+    width: 50%;
+    height: 67%;
+    font-family: 'Jua', sans-serif;
+    font-size: 20px;
+}
+.line {
+    text-align: center;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.line2 {
+    text-align: left;
+    position: relative;
+    left: 49%;
+    top: 40%;
+    transform: translateX(-30%);
+}
+.line3 {
+    text-align: left;
+    position: relative;
+    left: 23%;
+    top: 12%;
+}
+header div {
+    line-height: 40px;
+}
+.box {
+    font-size: 25px;
+    text-align: center;
+    background-color: #4949E8;
+    color: white;
+    width: 60%;
+    height: 8%;
+    text-align: left;
+    position: relative;
+    left: 20%;
+    top: 12%;
+    border-radius: 13px;
+}
+.box2 {
+    font-size: 25px;
+    text-align: center;
+    background-color: #6969A7;
+    color: white;
+    width: 50%;
+    height: 30%;
+    text-align: left;
+    position: relative;
+    left: 26%;
+    top: 12%;
+    border-radius: 13px;
+}
+#tip {
+    color: white;
+    font-size: 30px;
+    text-align: center;
+    width: 23%;
+    height: 6%;
+    border-radius: 13px;
+    background-color: #4949E8;
+}

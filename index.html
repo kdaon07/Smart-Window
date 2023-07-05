@@ -6,23 +6,46 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>스마트 윈도우</title>
-    <style>
-        table {
-            border-collapse: collapse;
-        }
-
-        table,
-        th,
-        td {
-            border: 1px solid;
-        }
-    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Do+Hyeon&family=Jua&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css.css">
 </head>
 
 <body>
-    <h1>Firebase EXAMPLE</h1><br />
-    <div id="container"></div>
-    <div id="container2"></div>
+    <div class="allbox">
+        <header>
+            <div class="line2" style="font-family: 'Jua', sans-serif; font-size: 20px;">실내의 쾌적한 공기를 책임지는</a></div>
+            <a href="https://github.com/chooseongwoo/9team" target="_blank" style="text-decoration: none; color: inherit;">
+                <div class="line">🪟SMART <span style="color: #4949E8;">WINDOW</span></div>
+            </a>
+        </header>
+        <aside>
+            <div class="line3" style="font-family: 'Jua', sans-serif; font-size: 20px;">주목할 기상이슈☝️</div>
+            <div class="box" style="text-align: center; line-height: 250%;">오후 6시에 비가 내릴 예정이에요!</div>
+            <br><br>
+            <div class="box2" style="text-align: left; line-height: 150%;">
+                <div style="left: 20px; text-align: left; position: relative;;">
+                    <br>
+                    <a style="font-family: 'Do HYeon', sans-serif; font-size: 35px;">지금 실내는...</a>
+                    <br>
+                    <div id="temp"></div>
+                    <div id="humi"></div>
+                    <div id="dust"></div>
+                </div>
+            </div>
+            <br>
+            <div class="box2"></div>
+        </aside>
+    </div>
+    <div class="allbox" style="float: left; top:33%; left: 12%;">
+        <span id="mp" style="font-family: 'Jua', sans-serif; font-size: 25px;"></span>
+        <span id="hour" style="font-family: 'Jua', sans-serif; font-size: 25px;"></span>
+        <div id="tip">
+            <div id="line">테스트</div>
+        </div>
+    </div>
+    
     <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-analytics.js"></script>
@@ -39,26 +62,38 @@
             appId: "1:356997279942:web:dc317ecfc74ce052e7a7c7",
             measurementId: "G-7GV8726MBS"
         };
-        
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
-        database.ref('students').set({
-            "full_name": "Andrew",
-            "age": 17,
-            "grade": "A"
-        });
-
         database.ref("sensor").on("value", snapshot => {
             const object = snapshot.val();
-            document.querySelector("#container").innerHTML =
-                object.temp + ", " + object.humi + ", " + object.dust;
+            document.querySelector("#temp").innerHTML =
+                "온도 : " + object.temp + "°C";
         });
-        database.ref("students").on("value", snapshot => {
+        database.ref("sensor").on("value", snapshot => {
             const object = snapshot.val();
-            document.querySelector("#container2").innerHTML =
-                object.full_name + ", " + object.grade + ", " + object.age;
+            document.querySelector("#humi").innerHTML =
+                "습도 : " + object.humi + "%";
         });
+        database.ref("sensor").on("value", snapshot => {
+            const object = snapshot.val();
+            document.querySelector("#dust").innerHTML =
+                "미세먼지 : " + object.dust + "㎍/m³";
+        });
+    </script>
+    <script>
+        let today = new Date();
+        let hours = today.getHours();
+        let hours2 = hours - 12;
+        if(hours>=13) {
+            mp.innerHTML = "지금 시간 오후 ";
+            hour.innerHTML = (hours2) + "시";
+        }
+        else {
+            mp.innerHTML = "지금 시간 오전 ";
+            hour.innerHTML = (hours) + "시";
+        } 
+
     </script>
 </body>
 
