@@ -8,15 +8,18 @@
     <title>스마트 윈도우</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Do+Hyeon&family=Jua&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Do+Hyeon&family=Jua&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="./css.css">
+    <script src="firebase.js"></script>
 </head>
 
 <body>
     <div class="allbox">
         <header>
             <div class="line2" style="font-family: 'Jua', sans-serif; font-size: 20px;">실내의 쾌적한 공기를 책임지는</a></div>
-            <a href="https://github.com/chooseongwoo/9team" target="_blank" style="text-decoration: none; color: inherit;">
+            <a href="https://github.com/chooseongwoo/9team" target="_blank"
+                style="text-decoration: none; color: inherit;">
                 <div class="line">🪟SMART <span style="color: #4949E8;">WINDOW</span></div>
             </a>
         </header>
@@ -41,11 +44,15 @@
     <div class="allbox" style="float: left; top:33%; left: 12%;">
         <span id="mp" style="font-family: 'Jua', sans-serif; font-size: 25px;"></span>
         <span id="hour" style="font-family: 'Jua', sans-serif; font-size: 25px;"></span>
-        <div id="tip">
-            <div id="line">테스트</div>
+        <div class="box3">
+            <div id="tip" class="line"></div>
         </div>
+        <br>
+        <div style="font-family: 'Jua', sans-serif; font-size: 23px;">&nbsp;&nbsp;직접 선택해주세요👇</div>
+        &nbsp;&nbsp;<input type="button" id="open" class="button" value="OPEN">
+        &nbsp;&nbsp;<input type="button" id="close" class="button" value="CLOSE">
     </div>
-    
+
     <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-analytics.js"></script>
@@ -80,20 +87,91 @@
             document.querySelector("#dust").innerHTML =
                 "미세먼지 : " + object.dust + "㎍/m³";
         });
+        document.getElementById("open").onclick = function () {
+            database.ref("set").on("value", snapshot => {
+            const object = snapshot.val();
+            const auto = object.auto;
+            if (auto == 0) {
+                document.getElementById("open").onclick = function () {
+                    database.ref("set").update({ 'window': 1 });
+                }
+                document.getElementById("close").onclick = function () {
+                    database.ref("set").update({ 'window': 0 });
+                }
+            }
+            else alert("자동모드입니다.");
+        });
+        }
+        document.getElementById("close").onclick = function () {
+            database.ref("set").on("value", snapshot => {
+            const object = snapshot.val();
+            const auto = object.auto;
+            if (auto == 0) {
+                document.getElementById("open").onclick = function () {
+                    database.ref("set").update({ 'window': 1 });
+                }
+                document.getElementById("close").onclick = function () {
+                    database.ref("set").update({ 'window': 0 });
+                }
+            }
+            else alert("자동모드입니다.");
+        });
+        }
+
     </script>
     <script>
-        let today = new Date();
-        let hours = today.getHours();
-        let hours2 = hours - 12;
-        if(hours>=13) {
-            mp.innerHTML = "지금 시간 오후 ";
-            hour.innerHTML = (hours2) + "시";
+        fun();
+        function fun() {
+            let today = new Date();
+            let hours = today.getHours();
+            let min = today.getMinutes();
+            let sec = today.getSeconds();
+            let hours2 = hours - 12;
+            if (hours >= 13) {
+                mp.innerHTML = "지금 시간 오후 ";
+                hour.innerHTML = (hours2) + "시 " + (min) + "분 " + (sec) + "초";
+            }
+            else {
+                mp.innerHTML = "지금 시간 오전 ";
+                hour.innerHTML = (hours) + "시 " + (min) + "분 " + (sec) + "초";
+            }
+            setTimeout(fun, 1000);
         }
-        else {
-            mp.innerHTML = "지금 시간 오전 ";
-            hour.innerHTML = (hours) + "시";
-        } 
-
+    </script>
+    <script>
+        f();
+        function f() {
+            const a = Math.floor(Math.random() * 9);
+            switch (a) {
+                case 1:
+                    tip.innerHTML = "환절기에는 가벼운 걷옷을 챙겨주세요";
+                    break;
+                case 2:
+                    tip.innerHTML = "햇빛이 강한 날에는 선크림을 발라주세요";
+                    break;
+                case 3:
+                    tip.innerHTML = "적정 물 섭취량은 8컵이라고 해요";
+                    break;
+                case 4:
+                    tip.innerHTML = "미세먼지가 심한 날에는 마스크를 꼭 써주세요";
+                    break;
+                case 5:
+                    tip.innerHTML = "밖이 밝다면 전등은 끄는 게 어떨까요?";
+                    break;
+                case 6:
+                    tip.innerHTML = "너무 추울 때 초콜릿을 먹으면 몸이 따뜻해져요";
+                    break;
+                case 7:
+                    tip.innerHTML = "여름철 적정 실내 온도는 24~26℃";
+                    break;
+                case 8:
+                    tip.innerHTML = "겨울철 적정 실내 온도는 18~20℃";
+                    break;
+                default:
+                    tip.innerHTML = "너무 건조한 거보다는 적정 습도를 유지하세요";
+            }
+            setTimeout(f, 10000);
+        }
     </script>
 </body>
 
