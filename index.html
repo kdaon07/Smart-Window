@@ -30,7 +30,7 @@
             <div class="box2" style="text-align: left; line-height: 150%;">
                 <div style="left: 20px; text-align: left; position: relative;;">
                     <br>
-                    <a style="font-family: 'Do HYeon', sans-serif; font-size: 35px;">지금 실내는...</a>
+                    <a style="font-family: 'Do HYeon', sans-serif; font-size: 35px;">지금 상황은...</a>
                     <br>
                     <div id="temp"></div>
                     <div id="humi"></div>
@@ -39,13 +39,14 @@
             </div>
             <br>
             <div class="box2">
-                <div style="left: 20px; text-align: left; position: relative;;">
+                <div style="top:-15px; left: 20px; text-align: left; position: relative;;">
                     <br>
                     <a style="font-family: 'Do HYeon', sans-serif; font-size: 35px;">사용자 설정</a>
                     <br>
                     <div id="utemp"></div>
                     <div id="uhumi"></div>
-                    <div id="udust"></div>
+                    <div id="uauto"></div>
+                    <div id="uwin"></div>
                 </div>
             </div>
         </aside>
@@ -66,8 +67,20 @@
         &nbsp;&nbsp;<input type="button" id="auto" class="button2" value="AUTO">
         &nbsp;&nbsp;<input type="button" id="setting" class="button2" value="SETTING">
     </div>
-    <div id="pop" style="position:absolute; left:10px; top:10px; width:1000px; height:500px; z-index:1;display:none;">
-        test
+    <div id="sett2" style="position:absolute; width:100%; height:100%; z-index:1;display:none;"></div>
+    <div id="sett" style="position:absolute; left:25%; width:50%; height:80%; z-index:1;display:inline;">
+        <div class="settbox">
+            <div>원하는 <span style="color: #4949E8;">온도</span>를 설정해 주세요</div>
+            <input type="number" id="settemp"><span class="boxtxt">°C</span>
+        </div>
+        <div class="settbox2">
+            <div>원하는 <span style="color: #4949E8;">습도</span>를 설정해 주세요</div>
+            <input type="number" id="sethumi"><span class="boxtxt">%</span>
+        </div>
+        <div class="btbox">
+            <button type="button" id="setbt">완료</button>
+            <button type="button" id="rsetbt">취소</button>
+        </div>
     </div>
     <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-database.js"></script>
@@ -113,10 +126,25 @@
             document.querySelector("#uhumi").innerHTML =
                 "습도 : " + object.uhumi + "%";
         });
-        database.ref("userset").on("value", snapshot => {
+        database.ref("set").on("value", snapshot => {
             const object = snapshot.val();
-            document.querySelector("#udust").innerHTML =
-                "미세먼지 : " + object.udust + "㎍/m³";
+            const auto = object.auto;
+            if (auto == 1) {
+                document.querySelector("#uauto").innerHTML = "설정 : 자동";
+            }
+            if (auto == 0) {
+                document.querySelector("#uauto").innerHTML = "설정 : 수동";
+            }
+        });
+        database.ref("set").on("value", snapshot => {
+            const object = snapshot.val();
+            const window = object.window;
+            if (window == 1) {
+                document.querySelector("#uwin").innerHTML = "창문 : 열림";
+            }
+            if (window == 0) {
+                document.querySelector("#uwin").innerHTML = "창문 : 닫힘";
+            }
         });
         database.ref("set").on("value", snapshot => {
             const object = snapshot.val();
@@ -124,11 +152,9 @@
             document.getElementById('auto').onclick = function () {
                 if (auto == 1) {
                     database.ref("set").update({ 'auto': 0 });
-                    alert("수동모드입니다.");
                 }
                 else {
                     database.ref("set").update({ 'auto': 1 });
-                    alert("자동모드입니다.");
                 }
 
                 document.getElementById("open").onclick = function () {
@@ -145,9 +171,30 @@
                 }
             };
         });
-        document.getElementById("setting").onclick = function () {
-            document.getElementById("pop").style.display='inline'
+        database.ref("userset").on("value", snapshot => {
+            const object = snapshot.val();
+            const utemp = object.utemp;
+            const uhumi = object.uhumi;
+            document.getElementById("setting").onclick = function () {
+            document.getElementById("sett2").style.display = 'inline'
+            document.getElementById("sett").style.top = '6%'
+            document.getElementById("settemp").value = (utemp)
+            document.getElementById("sethumi").value = (uhumi)
         }
+        });
+        document.getElementById('setbt').onclick = function () {
+            document.getElementById("sett2").style.display = 'none'
+            document.getElementById("sett").style.top = '100%'
+            const sett = document.getElementById('settemp').value;
+            const seth = document.getElementById('sethumi').value;
+            database.ref("userset").update({ 'utemp': (sett) });
+            database.ref("userset").update({ 'uhumi': (seth) });
+        }
+        document.getElementById('rsetbt').onclick = function () {
+            document.getElementById("sett2").style.display = 'none'
+            document.getElementById("sett").style.top = '100%'
+        }
+        
     </script>
     <script>
         fun();
