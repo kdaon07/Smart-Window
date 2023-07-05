@@ -20,7 +20,7 @@
 </head>
 
 <body>
-    <h1>Firebase EXAMPLE</h1><br/>
+    <h1>Firebase EXAMPLE</h1><br />
     <div id="container"></div>
     <div id="container2"></div>
     <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-app.js"></script>
@@ -48,21 +48,21 @@
         const database = firebase.database();
 
         database.ref('students').set({
-          "full_name": "Andrew",
-          "age": 17,
-          "grade": "A"
-      });
+            "full_name": "Andrew",
+            "age": 17,
+            "grade": "A"
+        });
 
         database.ref("sensor").on("value", snapshot => {
-          const object = snapshot.val();
-          document.querySelector("#container").innerHTML = 
-            object.temp + ", " + object.humi + ", " + object.dust;
-      });
-      database.ref("students").on("value", snapshot => {
-          const object = snapshot.val();
-          document.querySelector("#container2").innerHTML = 
-            object.full_name + ", " + object.grade + ", " + object.age;
-      });
+            const object = snapshot.val();
+            document.querySelector("#container").innerHTML =
+                object.temp + ", " + object.humi + ", " + object.dust;
+        });
+        database.ref("students").on("value", snapshot => {
+            const object = snapshot.val();
+            document.querySelector("#container2").innerHTML =
+                object.full_name + ", " + object.grade + ", " + object.age;
+        });
     </script>
 </body>
 
