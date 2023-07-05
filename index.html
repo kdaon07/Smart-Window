@@ -29,7 +29,6 @@
     <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-firestore.js"></script>
     <script>
-        // Your web app's Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyAlUkKCjlnXXI15SUrLCWEaMPnHPkgg6sA",
             authDomain: "smart-window-72fb6.firebaseapp.com",
@@ -40,11 +39,8 @@
             appId: "1:356997279942:web:dc317ecfc74ce052e7a7c7",
             measurementId: "G-7GV8726MBS"
         };
-
-        // Initialize Firebase
+        
         firebase.initializeApp(firebaseConfig);
-
-        // 데이터베이스 변수
         const database = firebase.database();
 
         database.ref('students').set({
