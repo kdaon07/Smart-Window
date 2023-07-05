@@ -39,12 +39,13 @@ select {
     text-align: center;
     position: relative;
     top: 40%;
+    left: 10%;
     transform: translateY(-50%);
 }
 .line2 {
     text-align: left;
     position: relative;
-    left: 49%;
+    left: 59%;
     top: 30%;
     transform: translateX(-30%);
 }
@@ -53,6 +54,13 @@ select {
     position: relative;
     left: 23%;
     top: 12%;
+}
+.line4 {
+    text-align: center;
+    position: relative;
+    top: 40%;
+    left: 0%;
+    transform: translateY(-50%);
 }
 header div {
     line-height: 40px;
@@ -138,4 +146,7 @@ header div {
 .button2:active {
     background-color: #323233;
     transition: background 0.4s ease-in-out;
+}
+#pop {
+    background-color: aqua;
 }

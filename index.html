@@ -25,7 +25,7 @@
         </header>
         <aside>
             <div class="line3" style="font-family: 'Jua', sans-serif; font-size: 20px;">주목할 기상이슈☝️</div>
-            <div class="box" style="text-align: center; line-height: 250%;">오후 6시에 비가 내릴 예정이에요!</div>
+            <div id="tip2" class="box" style="text-align: center; line-height: 250%;"></div>
             <br><br>
             <div class="box2" style="text-align: left; line-height: 150%;">
                 <div style="left: 20px; text-align: left; position: relative;;">
@@ -38,17 +38,26 @@
                 </div>
             </div>
             <br>
-            <div class="box2"></div>
+            <div class="box2">
+                <div style="left: 20px; text-align: left; position: relative;;">
+                    <br>
+                    <a style="font-family: 'Do HYeon', sans-serif; font-size: 35px;">사용자 설정</a>
+                    <br>
+                    <div id="utemp"></div>
+                    <div id="uhumi"></div>
+                    <div id="udust"></div>
+                </div>
+            </div>
         </aside>
     </div>
-    <div class="allbox" style="float: left; top:25%; left: 12%;">
+    <div class="allbox" style="float: left; top:25%; left: 20%;">
         <span id="mp" style="font-family: 'Jua', sans-serif; font-size: 25px;"></span>
         <span id="hour" style="font-family: 'Jua', sans-serif; font-size: 25px;"></span>
         <div class="box3">
-            <div id="tip" class="line"></div>
+            <div id="tip" class="line4"></div>
         </div>
         <br>
-        <div style="font-family: 'Jua', sans-serif; font-size: 23px;">&nbsp;&nbsp;직접 선택해주세요👇</div>
+        <div style="font-family: 'Jua', sans-serif; font-size: 23px;left: 10%;">&nbsp;&nbsp;직접 선택해주세요👇</div>
         &nbsp;&nbsp;<input type="button" id="open" class="button" value="OPEN">
         &nbsp;&nbsp;<input type="button" id="close" class="button" value="CLOSE">
         <br><br>
@@ -57,7 +66,9 @@
         &nbsp;&nbsp;<input type="button" id="auto" class="button2" value="AUTO">
         &nbsp;&nbsp;<input type="button" id="setting" class="button2" value="SETTING">
     </div>
-
+    <div id="pop" style="position:absolute; left:10px; top:10px; width:1000px; height:500px; z-index:1;display:none;">
+        test
+    </div>
     <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-analytics.js"></script>
@@ -92,6 +103,21 @@
             document.querySelector("#dust").innerHTML =
                 "미세먼지 : " + object.dust + "㎍/m³";
         });
+        database.ref("userset").on("value", snapshot => {
+            const object = snapshot.val();
+            document.querySelector("#utemp").innerHTML =
+                "온도 : " + object.utemp + "°C";
+        });
+        database.ref("userset").on("value", snapshot => {
+            const object = snapshot.val();
+            document.querySelector("#uhumi").innerHTML =
+                "습도 : " + object.uhumi + "%";
+        });
+        database.ref("userset").on("value", snapshot => {
+            const object = snapshot.val();
+            document.querySelector("#udust").innerHTML =
+                "미세먼지 : " + object.udust + "㎍/m³";
+        });
         database.ref("set").on("value", snapshot => {
             const object = snapshot.val();
             const auto = object.auto;
@@ -119,6 +145,9 @@
                 }
             };
         });
+        document.getElementById("setting").onclick = function () {
+            document.getElementById("pop").style.display='inline'
+        }
     </script>
     <script>
         fun();
@@ -172,6 +201,50 @@
                     tip.innerHTML = "너무 건조한 거보다는 적정 습도를 유지하세요";
             }
             setTimeout(f, 10000);
+        }
+    </script>
+    <script>
+        rt();
+        function rt() {
+            const i = Math.floor(Math.random() * 12) + 1;
+            switch (i) {
+                case 1:
+                    tip2.innerHTML = "1월 눈이 자주내리고 건조해요";
+                    break;
+                case 2:
+                    tip2.innerHTML = "2월 여전히 춥지만 눈이 줄어들고 따뜻해져요";
+                    break;
+                case 3:
+                    tip2.innerHTML = "3월 봄의 시작! 쌀쌀하고 변덕스러워요";
+                    break;
+                case 4:
+                    tip2.innerHTML = "4월 따뜻한 봄날, 환절기 감기 조심해요";
+                    break;
+                case 5:
+                    tip2.innerHTML = "5월 일교차가 커지고 가끔 소나기가 내려요";
+                    break;
+                case 6:
+                    tip2.innerHTML = "6월 초여름 시작, 더워지고 습도 높아져요";
+                    break;
+                case 7:
+                    tip2.innerHTML = "7월 본격적인 장마! 우산을 가지고 다녀요";
+                    break;
+                case 8:
+                    tip2.innerHTML = "8월 비가 많이 오고, 강풍이 불 수도 있어요";
+                    break;
+                case 8:
+                    tip2.innerHTML = "9월 시원한 가을의 시작! 건조하고 시원해져요";
+                    break;
+                case 8:
+                    tip2.innerHTML = "10월 가을의 정점, 시원하고 조금 쌀쌀해요";
+                    break;
+                case 8:
+                    tip2.innerHTML = "11월 초겨울, 추워지고 간간히 비가 내려요";
+                    break;
+                default:
+                    tip2.innerHTML = "12월 추운 겨울, 눈이 자주 내리고 건조해요";
+            }
+            setTimeout(rt, 6000);
         }
     </script>
 </body>
