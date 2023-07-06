@@ -155,32 +155,35 @@
                 }
                 else {
                     database.ref("set").update({ 'auto': 1 });
-                }
-
-                document.getElementById("open").onclick = function () {
-                    if (auto == 1) {
-                        database.ref("set").update({ 'window': 1 });
-                    }
-                    else alert("자동모드입니다.");
                 };
-                document.getElementById("close").onclick = function () {
-                    if (auto == 1) {
-                        database.ref("set").update({ 'window': 0 });
-                    }
-                    else alert("자동모드입니다.");
-                }
             };
+        });
+        database.ref("set").on("value", snapshot => {
+            const object = snapshot.val();
+            const auto = object.auto;
+            document.getElementById("open").onclick = function () {
+                if (auto == 0) {
+                    database.ref("set").update({ 'window': 1 });
+                }
+                else alert("자동모드입니다.");
+                };
+            document.getElementById("close").onclick = function () {
+                if (auto == 0) {
+                    database.ref("set").update({ 'window': 0 });
+                }
+                else alert("자동모드입니다.");
+                };
         });
         database.ref("userset").on("value", snapshot => {
             const object = snapshot.val();
             const utemp = object.utemp;
             const uhumi = object.uhumi;
             document.getElementById("setting").onclick = function () {
-            document.getElementById("sett2").style.display = 'inline'
-            document.getElementById("sett").style.top = '6%'
-            document.getElementById("settemp").value = (utemp)
-            document.getElementById("sethumi").value = (uhumi)
-        }
+                document.getElementById("sett2").style.display = 'inline'
+                document.getElementById("sett").style.top = '6%'
+                document.getElementById("settemp").value = (utemp)
+                document.getElementById("sethumi").value = (uhumi)
+            }
         });
         document.getElementById('setbt').onclick = function () {
             document.getElementById("sett2").style.display = 'none'
@@ -194,7 +197,7 @@
             document.getElementById("sett2").style.display = 'none'
             document.getElementById("sett").style.top = '100%'
         }
-        
+
     </script>
     <script>
         fun();
